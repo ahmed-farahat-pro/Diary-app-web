@@ -1,0 +1,44 @@
+  const db = firebase.firestore();
+
+const addData = async (collectionName, data) => {
+  try {
+    const ref = db.collection(collectionName);
+    const docRef = await ref.add(data);
+    console.log("Data added to Firestore with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding data to Firestore: ", error);
+  }
+};
+
+//addData("ahmedzxo", { name: "John Doe", email: "johndoe@example.com" });
+
+
+
+
+
+
+
+import React from 'react';
+import { FlatList, Text, View } from 'react-native';
+
+const data = [
+  { key: '1', title: 'First Item' },
+  { key: '2', title: 'Second Item' },
+  { key: '3', title: 'Third Item' },
+  ...
+];
+
+const ListExample = () => {
+  return (
+    <View>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Text>{item.title}</Text>
+        )}
+      />
+    </View>
+  );
+};
+
+export default ListExample;

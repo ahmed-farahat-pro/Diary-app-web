@@ -1,0 +1,106 @@
+import { StatusBar } from 'expo-status-bar';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { Audio , Sound} from 'expo-av';
+import React, { useState , useEffect } from 'react';
+
+
+export default function ringing ({navigation})
+{
+
+
+     
+
+
+ const playbackObj = new Audio.Sound();
+    
+  const playSound = async () => {
+ await  playbackObj.loadAsync(require("./assets/ringing.wav"));
+  
+
+   playbackObj.playAsync();
+
+
+  }
+const stopAudio = async () => {
+     
+       
+         try { await playbackObj.stopAsync();
+    await playbackObj.unloadAsync();
+  } catch (error) {
+    console.error(error);
+  }
+       
+    
+}
+       
+
+    // Your sound has stopped playing!
+    useEffect(()=>{
+    playSound();
+    },[])
+
+ 
+
+
+    return(
+        <View style={{flex:1  , justifyContent:'center' }}>
+            <Text style={{ alignSelf:'center'}}>hallo world</Text>
+          
+             <Button title = 'stop' onPress={stopAudio}/>
+              <Button title = 'camera' onPress={()=> { stopAudio(); navigation.navigate("CAMERA");}}/>
+               <Button title = 'mic' onPress={()=> {stopAudio() ; navigation.navigate("RECORD");}}/>
+        
+          
+        </View>
+    )
+}
+
+
+
+
+
+
+
+const soundObject = new Audio.Sound();
+
+ const [sound, setSound] = React.useState();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync( require('https://firebasestorage.googleapis.com/v0/b/firstapp-ad6a4.appspot.com/o/2023-02-04T14%3A56%3A11.497Z?alt=media&token=968e5b4e-0263-42fa-aff8-2daa9134de86')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  <Button title='play sound ' onPress={playSound}/>
+
+
+  https://firebasestorage.googleapis.com/v0/b/firstapp-ad6a4.appspot.com/o/2023-02-04T14%3A56%3A11.497Z?alt=media&token=968e5b4e-0263-42fa-aff8-2daa9134de86
+
+
+
+
+                 const recording = new Audio.Recording();
+await recording.prepareToRecordAsync({
+  isMeteringEnabled: true,
+  android: {
+    extension: '.m4a',
+    sampleRate: 44100,
+    numberOfChannels: 2,
+    bitRate: 128000,
+  },
+  ios: {
+    extension: '.wav',
+    outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEGLAYER3,
+    audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MEDIUM,
+    sampleRate: 44100,
+    numberOfChannels: 2,
+    bitRate: 128000,
+    linearPCMBitDepth: 16,
+    linearPCMIsBigEndian: false,
+    linearPCMIsFloat: false,
+  },
+})
